@@ -37,5 +37,4 @@ public class DnsConfigTest
 
         assertEquals("site-test", configurator.get("site").get());
     }
-
 }
