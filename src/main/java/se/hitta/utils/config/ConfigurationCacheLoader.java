@@ -18,6 +18,10 @@ public class ConfigurationCacheLoader extends CacheLoader<String, Configuration>
     
     final ConfigurationLoader configurationLoader;
     
+    /**
+     * This is simply an async {@link CacheLoader} for loading data from a {@link ConfigurationLoader}
+     * @param configurationLoader the {@link ConfigurationLoader} to use when loading the Configuration
+     */
     public ConfigurationCacheLoader(final ConfigurationLoader configurationLoader)
     {
         this.configurationLoader = configurationLoader;

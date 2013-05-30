@@ -11,6 +11,16 @@ public class CachedConfigurator
     private static final String CACHE_KEY = "config";
     private final LoadingCache<String, Configuration> cache;
 
+    /**
+     * The cached configurator will use a {@link ConfigurationCacheLoader} to load key/value based configuration.
+     * The cached configurator utilizes a {@link LoadingCache} to handle cached versions of the configuration.
+     * The cache will be automatically refreshed using the provided interval. The refresh is non-blocking. Stale data will be served while the refresh is underway.
+     * @param refreshTime refresh time
+     * @param refreshTimeUnit time unit for refresh time
+     * @param loader the loader to use.
+     * 
+     * @see DnsConfigurationLoader
+     */
     public CachedConfigurator(int refreshTime, TimeUnit refreshTimeUnit, ConfigurationCacheLoader loader)
     {
         this.cache = CacheBuilder.newBuilder().maximumSize(1).refreshAfterWrite(refreshTime, refreshTimeUnit).build(loader);

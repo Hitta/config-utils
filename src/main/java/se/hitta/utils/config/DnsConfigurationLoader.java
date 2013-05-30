@@ -13,11 +13,17 @@ import com.google.common.base.Optional;
 public class DnsConfigurationLoader implements ConfigurationLoader
 {
     private final Logger log = LoggerFactory.getLogger(DnsConfigurationLoader.class);
-    private final String record;
+    private final String name;
     
-    public DnsConfigurationLoader(String record)
+    /**
+     * This loader will query the given DNS name for a TXT-record and use the value returned to build a {@link DnsConfiguration}
+     * It expects the TXT-record to contain comma separated key/value pairs separated by one or more white spaces e.g.:<br/>
+     * "key1:value1 key2:value2 key3:value3"
+     * @param name the DNS name to query 
+     */
+    public DnsConfigurationLoader(String name)
     {
-        this.record = record;
+        this.name = name;
         
     }
     
@@ -26,7 +32,7 @@ public class DnsConfigurationLoader implements ConfigurationLoader
     {
         try
         {
-            Record[] records = new Lookup(this.record, Type.TXT).run();
+            Record[] records = new Lookup(this.name, Type.TXT).run();
             
             if (records.length > 0 && records[0] instanceof TXTRecord)
             {
@@ -39,7 +45,7 @@ public class DnsConfigurationLoader implements ConfigurationLoader
             }
         } catch (Exception e)
         {
-            log.warn("Failed to load DNS TXT record from source: " + this.record, e);
+            log.warn("Failed to load DNS TXT record from source: " + this.name, e);
         }
         
         return Optional.absent();
