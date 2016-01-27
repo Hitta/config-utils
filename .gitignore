@@ -1,4 +1,6 @@
+# IntelliJ project files
 .idea/
 *.iml
 
+# Maven build directory
 target/
